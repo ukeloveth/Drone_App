@@ -26,7 +26,7 @@ public class Drone  extends BaseClass{
     private double batteryPercentage;
 
     @Enumerated(EnumType.STRING)
-    private DroneModel model;
+    private DroneModel droneModel;
 
     private double currentWeight;
 
