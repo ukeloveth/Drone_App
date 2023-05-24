@@ -1,6 +1,6 @@
 package com.test.droneapp.service.impl;
 
-import com.test.droneapp.config.Default_Messages;
+import com.test.droneapp.constants.Default_Messages;
 import com.test.droneapp.dtos.request.DroneRegistrationPayload;
 import com.test.droneapp.entity.Drone;
 import com.test.droneapp.entity.Medication;

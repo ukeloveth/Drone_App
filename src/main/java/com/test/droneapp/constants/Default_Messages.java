@@ -1,4 +1,4 @@
-package com.test.droneapp.config;
+package com.test.droneapp.constants;
 
 public class Default_Messages {
 
