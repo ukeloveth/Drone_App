@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
-import java.util.Set;
+import java.util.List;
 
 @Getter
 @Setter
@@ -36,5 +36,5 @@ public class Drone  extends BaseClass{
 
     @OneToMany(mappedBy = "drone", fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JsonIgnore
-    private Set<Medication> medicationList;
+    private List<Medication> medicationList;
 }

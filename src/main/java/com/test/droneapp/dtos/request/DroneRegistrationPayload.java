@@ -1,6 +1,5 @@
 package com.test.droneapp.dtos.request;
 
-import com.test.droneapp.entity.Drone;
 import com.test.droneapp.enums.DroneModel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

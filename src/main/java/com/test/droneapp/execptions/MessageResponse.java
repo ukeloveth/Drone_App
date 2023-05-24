@@ -6,11 +6,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter
-public class DroneException extends RuntimeException{
-    public DroneException(String message){
-        super(message);
-    }
+public class MessageResponse {
+    private String message;
 }

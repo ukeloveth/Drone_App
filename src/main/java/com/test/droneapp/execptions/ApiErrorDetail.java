@@ -1,18 +1,19 @@
 package com.test.droneapp.execptions;
 
 import lombok.Data;
+import org.springframework.http.HttpStatus;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 public class ApiErrorDetail {
-    private LocalDateTime timeStamp;
+    private Date timestamp;
     private String message;
-    private String details;
+    private HttpStatus httpStatus;
 
-    public ApiErrorDetail(String message, String details){
-        this.message =message;
-        this.details = details;
-        this.timeStamp = LocalDateTime.now();
+    public ApiErrorDetail(String message, HttpStatus httpStatus) {
+        this.timestamp = new Date();
+        this.message = message;
+        this.httpStatus = httpStatus;
     }
 }

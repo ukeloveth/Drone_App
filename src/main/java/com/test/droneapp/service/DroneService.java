@@ -11,7 +11,7 @@ public interface DroneService {
 
     ResponseEntity<Drone> createADrone(DroneRegistrationPayload droneDto);
     ResponseEntity<List<Drone>> fetchAllDrones();
-    ResponseEntity<?> loadDroneWithMedication(Long droneId, Long medicationId);
+    ResponseEntity<?> loadDroneWithAMedication(Long droneId, Long medicationId);
     ResponseEntity<List<Medication>> fetchMedicationsForADrone(Long droneId);
     ResponseEntity<List<Drone>> fetchAllAvailableDrones();
     ResponseEntity<String> fetchDroneBatteryLevel(Long droneId);
