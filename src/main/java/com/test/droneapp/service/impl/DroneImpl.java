@@ -11,11 +11,16 @@ import com.test.droneapp.execptions.MedicationException;
 import com.test.droneapp.repositories.DroneRepository;
 import com.test.droneapp.repositories.MedicationRepository;
 import com.test.droneapp.service.DroneService;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
+@AllArgsConstructor
+@Slf4j
 public class DroneImpl implements DroneService {
     private DroneRepository droneRepository;
     private MedicationRepository medicationRepository;
