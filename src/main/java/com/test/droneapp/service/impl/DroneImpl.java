@@ -32,8 +32,8 @@ public class DroneImpl implements DroneService {
                 .batteryPercentage(100.0)
                 .state(DroneState.IDLE)
                 .build();
-        Drone createdDroneEntity = droneRepository.save(drone);
-        return new ResponseEntity<>(createdDroneEntity, HttpStatus.CREATED);
+        Drone createdDrone = droneRepository.save(drone);
+        return new ResponseEntity<>(createdDrone, HttpStatus.CREATED);
     }
 
     @Override
@@ -43,26 +43,26 @@ public class DroneImpl implements DroneService {
 
     @Override
     public ResponseEntity<String> loadDroneWithAMedication (Long droneId, Long medicationId) {
-        Drone droneEntity = findDroneByIdOrElseThrowException(droneId);
+        Drone Drone = findDroneByIdOrElseThrowException(droneId);
         Medication medication = findMedicationByIdOrElseThrowException(medicationId);
 
         if(medication.getDrone() != null) throw new MedicationException(Default_Messages.MEDICATION_ATTACHED_EXCEPTION);
 
-        validateDroneAvailabilityOrElseThrowException(droneEntity, medication);
-        droneEntity.setCurrentWeight(droneEntity.getCurrentWeight() + medication.getWeight());
+        validateDroneAvailabilityOrElseThrowException(Drone, medication);
+        Drone.setCurrentWeight(Drone.getCurrentWeight() + medication.getWeight());
 
-        droneEntity.getMedicationList().add(medication);
-        medication.setDrone(droneEntity);
+        Drone.getMedicationList().add(medication);
+        medication.setDrone(Drone);
 
-        revaluateDroneState(droneEntity);
-        droneRepository.save(droneEntity);
+        revaluateDroneState(Drone);
+        droneRepository.save(Drone);
         return ResponseEntity.ok(String.format(Default_Messages.MEDICATION_LOAD_SUCCESS, medicationId, droneId));
     }
 
     @Override
     public ResponseEntity<List<Medication>> fetchMedicationsForADrone(Long droneId) {
-        Drone droneEntity = findDroneByIdOrElseThrowException(droneId);
-        return ResponseEntity.ok(droneEntity.getMedicationList());
+        Drone Drone = findDroneByIdOrElseThrowException(droneId);
+        return ResponseEntity.ok(Drone.getMedicationList());
     }
     @Override
     public ResponseEntity<List<Drone>> fetchAllAvailableDrones() {
@@ -71,8 +71,8 @@ public class DroneImpl implements DroneService {
 
     @Override
     public ResponseEntity<String> fetchDroneBatteryLevel(Long droneId) {
-        Drone droneEntity = findDroneByIdOrElseThrowException(droneId);
-        String response = String.format(Default_Messages.DRONE_BATTERY_LEVEL, droneEntity.getBatteryPercentage());
+        Drone Drone = findDroneByIdOrElseThrowException(droneId);
+        String response = String.format(Default_Messages.DRONE_BATTERY_LEVEL, Drone.getBatteryPercentage());
         return ResponseEntity.ok(response);
     }
 
@@ -93,22 +93,20 @@ public class DroneImpl implements DroneService {
     }
 
 
+    private void validateDroneAvailabilityOrElseThrowException(Drone Drone, Medication medication) {
+        DroneState droneState = Drone.getState();
+        DroneModel droneModel = Drone.getDroneModel();
 
-
-    private void validateDroneAvailabilityOrElseThrowException(Drone droneEntity, Medication medication) {
-        DroneState droneState = droneEntity.getState();
-        DroneModel droneModel = droneEntity.getDroneModel();
-
-        long droneId = droneEntity.getId();
+        long droneId = Drone.getId();
         double droneCapacity = droneModel.getWeight();
-        double droneCurrentWeight = droneEntity.getCurrentWeight();
+        double droneCurrentWeight = Drone.getCurrentWeight();
 
         if(!(droneState.equals(DroneState.IDLE) || droneState.equals(DroneState.LOADING))) {
             throw new DroneException(
                     String.format(Default_Messages.DRONE_NOT_AVAILABLE, droneId));
         }
 
-        if(droneEntity.getBatteryPercentage() < 25) {
+        if(Drone.getBatteryPercentage() < 25) {
             throw new DroneException(
                     String.format(Default_Messages.DRONE_BATTERY_LOW, droneId)
             );
@@ -121,11 +119,11 @@ public class DroneImpl implements DroneService {
         }
     }
 
-    private void revaluateDroneState(Drone droneEntity) {
-        if(droneEntity.getCurrentWeight() < droneEntity.getDroneModel().getWeight()){
-            droneEntity.setState(DroneState.LOADING);
-        } else if(droneEntity.getCurrentWeight() == droneEntity.getDroneModel().getWeight()){
-            droneEntity.setState(DroneState.LOADED);
+    private void revaluateDroneState(Drone Drone) {
+        if(Drone.getCurrentWeight() < Drone.getDroneModel().getWeight()){
+            Drone.setState(DroneState.LOADING);
+        } else if(Drone.getCurrentWeight() == Drone.getDroneModel().getWeight()){
+            Drone.setState(DroneState.LOADED);
         }
     }
 

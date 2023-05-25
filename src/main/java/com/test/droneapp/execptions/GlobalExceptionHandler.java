@@ -34,8 +34,8 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MedicationException.class)
     public ResponseEntity<?> handleMedicationNotFoundEx(MedicationException ex) {
-        ApiErrorDetail errorDetail = new ApiErrorDetail(ex.getMessage(), HttpStatus.NOT_FOUND);
-        return new ResponseEntity<>(errorDetail, HttpStatus.NOT_FOUND);
+        ApiErrorDetail errorDetail = new ApiErrorDetail(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(errorDetail, HttpStatus.BAD_REQUEST);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)

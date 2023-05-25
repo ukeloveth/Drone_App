@@ -7,7 +7,6 @@ import lombok.Setter;
 
 @Getter
 @AllArgsConstructor
-@NoArgsConstructor
 @Setter
 public class DroneException extends RuntimeException{
     public DroneException(String message){
